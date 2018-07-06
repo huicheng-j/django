@@ -244,7 +244,7 @@ class BaseCommand:
         """
         return django.get_version()
 
-    def create_parser(self, prog_name, subcommand):
+    def create_parser(self, prog_name, subcommand, **kwargs):
         """
         Create and return the ``ArgumentParser`` which will be used to
         parse the arguments to this command.
@@ -255,10 +255,11 @@ class BaseCommand:
             formatter_class=DjangoHelpFormatter,
             missing_args_message=getattr(self, 'missing_args_message', None),
             called_from_command_line=getattr(self, '_called_from_command_line', None),
+            **kwargs
         )
         parser.add_argument('--version', action='version', version=self.get_version())
         parser.add_argument(
-            '-v', '--verbosity', action='store', dest='verbosity', default=1,
+            '-v', '--verbosity', default=1,
             type=int, choices=[0, 1, 2, 3],
             help='Verbosity level; 0=minimal output, 1=normal output, 2=verbose output, 3=very verbose output',
         )
@@ -276,7 +277,7 @@ class BaseCommand:
         )
         parser.add_argument('--traceback', action='store_true', help='Raise on CommandError exceptions')
         parser.add_argument(
-            '--no-color', action='store_true', dest='no_color',
+            '--no-color', action='store_true',
             help="Don't colorize the command output.",
         )
         self.add_arguments(parser)

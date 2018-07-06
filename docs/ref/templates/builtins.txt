@@ -1804,7 +1804,7 @@ For example::
 
     {{ value|json_script:"hello-data" }}
 
-If ``value`` is a the dictionary ``{'hello': 'world'}``, the output will be:
+If ``value`` is the dictionary ``{'hello': 'world'}``, the output will be:
 
 .. code-block:: html
 
@@ -1814,8 +1814,7 @@ The resulting data can be accessed in JavaScript like this:
 
 .. code-block:: javascript
 
-    var el = document.getElementById('hello-data');
-    var value = JSON.parse(el.textContent || el.innerText);
+    var value = JSON.parse(document.getElementById('hello-data').textContent);
 
 XSS attacks are mitigated by escaping the characters "<", ">" and "&". For
 example if ``value`` is ``{'hello': 'world</script>&amp;'}``, the output is:
